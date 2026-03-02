@@ -24,3 +24,5 @@ print(seller_ufun((99,)))
 # Run and get result
 result = session.run()
 print(f"Agreement: {result.agreement}, Rounds: {result.step}")
+
+# batunun gotune
