@@ -8,6 +8,9 @@ from negmas import SAOMechanism, make_issue
 from negmas.sao import SAONegotiator
 
 from microAgent_2issues import MicroNegotiator, MicroConfig as MicroCfg2
+
+from base_agent_simona import BaseNegotiator
+
 from ReactiveT4TwLateTimePressure_2issues import (
     ReactiveT4TNegotiator,
     ReactiveT4TConfig as rct4tCfg2,
@@ -25,13 +28,15 @@ N_STEPS = 100
 
 def make_ufuns(price_weight: float = 0.6, reserved_value: float = 0.3):
     buyer = PriceQuantityUFun(
-        MAX_PRICE, MAX_QTY,
+        MAX_PRICE,
+        MAX_QTY,
         prefer_low_price=True,
         price_weight=price_weight,
         reserved_value=reserved_value,
     )
     seller = PriceQuantityUFun(
-        MAX_PRICE, MAX_QTY,
+        MAX_PRICE,
+        MAX_QTY,
         prefer_low_price=False,
         price_weight=price_weight,
         reserved_value=reserved_value,
@@ -48,7 +53,7 @@ def run_match(
     plot: bool = True,
 ):
     issues = [
-        make_issue(name="price", values=MAX_PRICE + 1),
+        make_issue(name="price", values=list(range(MAX_PRICE + 1))),
         make_issue(name="quantity", values=list(range(1, MAX_QTY + 1))),
     ]
     session = SAOMechanism(issues=issues, n_steps=N_STEPS)
@@ -80,7 +85,9 @@ if __name__ == "__main__":
     run_match(
         MicroNegotiator(
             "micro_buyer",
-            MicroCfg2(reserved_value=0.30, power=2.5, accept_slack=0.02, debug_every=10),
+            MicroCfg2(
+                reserved_value=0.30, power=2.5, accept_slack=0.02, debug_every=10
+            ),
         ),
         ReactiveT4TNegotiator(
             "reactive_seller",
@@ -100,7 +107,9 @@ if __name__ == "__main__":
     run_match(
         MicroNegotiator(
             "micro_buyer",
-            MicroCfg2(reserved_value=0.30, power=2.5, accept_slack=0.02, debug_every=10),
+            MicroCfg2(
+                reserved_value=0.30, power=2.5, accept_slack=0.02, debug_every=10
+            ),
         ),
         TimeBasedWithOutcomeEnumNegotiator(
             "timebased_seller",
@@ -126,6 +135,23 @@ if __name__ == "__main__":
             "timebased_seller",
             toeCfg2(reserved_value=0.40, power=6.0, accept_slack=0.01, debug_every=0),
         ),
+        buyer_ufun,
+        seller_ufun,
+    )
+
+    # --------------------------------------------------
+    # Match 4: ReactiveT4T (buyer) vs BaseNegotiator/Simona (seller)
+    # --------------------------------------------------
+    print("=" * 50)
+    print("Match 4: ReactiveT4T (buyer) vs Simona/Base (seller)")
+    print("=" * 50)
+    buyer_ufun, seller_ufun = make_ufuns()
+    run_match(
+        ReactiveT4TNegotiator(
+            "reactive_buyer",
+            rct4tCfg2(concession_threshold=0.03, time_pressure=0.85),
+        ),
+        BaseNegotiator(name="simona_seller", gamma=1.0, reserved_value=0.4),
         buyer_ufun,
         seller_ufun,
     )
