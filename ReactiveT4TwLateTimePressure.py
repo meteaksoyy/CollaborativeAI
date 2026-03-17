@@ -28,12 +28,14 @@ class ReactiveT4TConfig:
     concession_threshold: float = 0.03
     # Hard time limit to start 'panic' concessions
     time_pressure: float = 0.85
+    reserved_value: float = 0.2
 
 
 class ReactiveT4TNegotiator(SAONegotiator):
     def __init__(self, name: str, cfg: Optional[ReactiveT4TConfig] = None):
         super().__init__(name=name)
         self.cfg = cfg or ReactiveT4TConfig()
+        self._rv = self.cfg.reserved_value
         self._sorted_outcomes: List[Tuple[float, Any]] = []
         self._current_index = 0
         self._last_opponent_u = -1.0
@@ -54,7 +56,7 @@ class ReactiveT4TNegotiator(SAONegotiator):
         scored = []
         for v in vals:
             u = float(self.ufun((v,)))
-            if u >= self.ufun.reserved_value:
+            if u >= self._rv:
                 scored.append((u, (v,)))
 
         # Ranked outcomes: Heart of the MiCRO strategy
@@ -73,7 +75,7 @@ class ReactiveT4TNegotiator(SAONegotiator):
         u_off = float(self.ufun(actual_offer))
 
         # 1. Immediate rejection if below walk-away value
-        if u_off < self.ufun.reserved_value:
+        if u_off < self._rv:
             return ResponseType.REJECT_OFFER
 
         # 2. Behavioral Update: Concede only if opponent did

@@ -1,0 +1,55 @@
+\documentclass[../report.tex]{subfiles}
+\begin{document}
+
+\section{Trying Out a New Strategy}
+
+\subsection{Motivation}
+
+Both previous agents follow a time-based concession schedule governed by $t^\gamma$, conceding regardless of the opponent's behavior. Against a stubborn opponent this leaks value unnecessarily. We therefore implemented a \emph{Reactive Tit-for-Tat with Late Time Pressure} agent (\texttt{ReactiveT4TNegotiator}), which concedes only in response to opponent movement and uses time pressure solely as a deadline safeguard.
+
+\subsection{Agent Design}
+
+\subsubsection{Outcome Ranking}
+
+At initialisation the agent enumerates all outcomes above the reserved value $r_v$ and sorts them by utility: $u_0 \geq u_1 \geq \cdots \geq u_{|\mathcal{O}|-1}$. A pointer $k$ (initially $0$) tracks the current aspiration; the agent always proposes $o_k$.
+
+\subsubsection{Reactive Concession}
+
+Concession is triggered only when the opponent's offer improves by more than a threshold $\theta_c$ (default $0.03$):
+\[
+  u(\text{offer}_t) - u(\text{offer}_{t-1}) > \theta_c \;\Rightarrow\; k \leftarrow \min(|\mathcal{O}|-1,\,k+1)
+\]
+If the opponent holds firm, so does the agent.
+
+\subsubsection{Late Time Pressure}
+
+To avoid deadline failure, once relative time $t$ exceeds $\tau = 0.85$ the pointer is swept forward linearly:
+\[
+  k \leftarrow \max\!\left(k,\;\Bigl\lfloor\tfrac{t-\tau}{1-\tau}(|\mathcal{O}|-1)\Bigr\rfloor\right)
+\]
+
+\begin{table}[h!]
+    \centering
+    \begin{tabularx}{\columnwidth}{lp{2.1cm}X}
+        \toprule
+        \textbf{Property} & \textbf{Base/Improved} & \textbf{ReactiveT4T} \\
+        \midrule
+        Concession driver & Time ($t^\gamma$) & Opponent's move \\
+        Outcome selection & Utility threshold & Ranked list \\
+        Deadline safety & Inherent & Late sweep ($\tau$) \\
+        Parameters & $\gamma$, $r_v$ & $\theta_c$, $\tau$ \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Strategy comparison.}
+    \label{tab:strategy_comparison}
+\end{table}
+
+\subsection{Evaluation}
+
+We repeated the same setup as in previous chapters, running 30 sessions per scenario against the \texttt{AspirationNegotiator} and \texttt{RandomNegotiator} across all five scenarios.
+
+Against the \texttt{AspirationNegotiator}, the ReactiveT4T agent achieved a 100\% agreement rate in both roles, with an average utility of $0.681$ as buyer and $0.714$ as seller. The aspiration opponent received only $0.409$ and $0.422$ respectively, showing that the reactive strategy captures significantly more value against a concession-based opponent.
+
+Against the \texttt{RandomNegotiator}, agreement rates dropped to $69\%$ (buyer) and $57\%$ (seller). However, when agreements were reached, ReactiveT4T obtained near-optimal utility ($0.986$ as buyer, $0.968$ as seller), while the random agent received almost nothing ($0.095$ and $0.153$). The lower agreement rate reflects the agent holding firm until the opponent's random proposals happen to meet its threshold.
+
+\end{document}

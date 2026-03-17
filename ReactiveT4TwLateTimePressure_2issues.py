@@ -51,12 +51,14 @@ class PriceQuantityUFun:
 class ReactiveT4TConfig:
     concession_threshold: float = 0.03
     time_pressure: float = 0.85
+    reserved_value: float = 0.2
 
 
 class ReactiveT4TNegotiator(SAONegotiator):
     def __init__(self, name: str, cfg: Optional[ReactiveT4TConfig] = None):
         super().__init__(name=name)
         self.cfg = cfg or ReactiveT4TConfig()
+        self._rv = self.cfg.reserved_value
         self._sorted_outcomes: List[Tuple[float, Any]] = []
         self._current_index = 0
         self._last_opponent_u = -1.0
@@ -78,7 +80,7 @@ class ReactiveT4TNegotiator(SAONegotiator):
         scored = []
         for combo in itertools.product(*vals_per_issue):
             u = float(self.ufun(combo))
-            if u >= self.ufun.reserved_value:
+            if u >= self._rv:
                 scored.append((u, combo))
 
         self._sorted_outcomes = sorted(scored, key=lambda x: x[0], reverse=True)
@@ -94,7 +96,7 @@ class ReactiveT4TNegotiator(SAONegotiator):
 
         u_off = float(self.ufun(actual_offer))
 
-        if u_off < self.ufun.reserved_value:
+        if u_off < self._rv:
             return ResponseType.REJECT_OFFER
 
         if self._last_opponent_u != -1.0:
