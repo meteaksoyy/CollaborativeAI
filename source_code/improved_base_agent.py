@@ -40,7 +40,7 @@ class ImprovedBaseNegotiator(SAONegotiator):
     def propose(self, state, *args, **kwargs):
         t = state.relative_time
 
-        # add adaptive gamm on how the opponent is acting
+        # add adaptive gamma on how the opponent is acting
         if self.opponent_history:
 
             # calculate average utility for us on opponents offers
