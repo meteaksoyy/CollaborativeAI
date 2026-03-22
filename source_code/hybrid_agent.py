@@ -204,7 +204,7 @@ class HybridEvaluation:
             "Multi Issue Unequal": EvaluationScenarios.getMultipleIssueB(),
         }
 
-        gammas = [2.0]
+        gammas = [0.5]
         alphas = [0.7]
         memories = [5]
 

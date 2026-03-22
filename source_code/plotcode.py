@@ -20,12 +20,12 @@ def compare_bidirectional(results1, results2, title):
     plt.figure(figsize=(12,6))
 
     # Base → Opponent
-    plt.bar(x - width - gap/2, buyer1, width, label="Reactive Buyer", color="#b3d1ff")
-    plt.bar(x - gap/2, seller1, width, label="Random Seller", color="#e47276")
+    plt.bar(x - width - gap/2, buyer1, width, label="Hybrid Buyer", color="#b3d1ff")
+    plt.bar(x - gap/2, seller1, width, label="Aspirational Seller", color="#ffe0b3")
 
     # Opponent → Base
-    plt.bar(x + width + gap/2, seller2, width, label="Reactive Seller", color="#0052cc")
-    plt.bar(x + gap/2, buyer2, width, label="Random Buyer", color="#f00909")
+    plt.bar(x + width + gap/2, seller2, width, label="Hybrid Seller", color="#0052cc")
+    plt.bar(x + gap/2, buyer2, width, label="Aspirational Buyer", color="#ff9900")
 
     plt.xticks(x, scenarios, rotation=40, ha="right")
     plt.ylabel("Average Utility")
@@ -53,9 +53,9 @@ if __name__ == "__main__":
     # print(f"Mean agreement rate for γ=0.5: {np.mean(agreement_rates_05):.2f}")
     # print(f"Mean agreement rate for γ=2.0: {np.mean(agreement_rates_20):.2f}")
 
-    with open("C:\\Users\\HP\\Personal Projects\\NegotatingAgent\\folder\\CollaborativeAI\\source_code\\results_ReactiveT4T_vs_RandomNegotiator.pkl", "rb") as f:
+    with open(r"C:\Users\HP\Personal Projects\NegotatingAgent\folder\CollaborativeAI\source_code\results_Hybrid_vs_AspirationNegotiator_g0.5_a0.7_m5.pkl", "rb") as f:
         results1 = pickle.load(f)
-    with open("C:\\Users\\HP\\Personal Projects\\NegotatingAgent\\folder\\CollaborativeAI\\source_code\\results_RandomNegotiator_vs_ReactiveT4T.pkl", "rb") as f:
+    with open(r"C:\Users\HP\Personal Projects\NegotatingAgent\folder\CollaborativeAI\source_code\results_AspirationNegotiator_vs_Hybrid_g0.5_a0.7_m5.pkl", "rb") as f:
         results2 = pickle.load(f)
 
     a = ([r["agreement_rate"] for r in results1])
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     compare_bidirectional(
         results1,
         results2,
-        "ReactiveT4T vs Random Average Utilities"
+        "Hybrid vs Aspirational Average Utilities for γ = 0.5, α = 0.7 "
     )
 
     # # Base vs Random

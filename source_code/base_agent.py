@@ -9,7 +9,7 @@ import pickle
 # Base Linear Time-Based Agent
 # -------------------------
 class BaseNegotiator(SAONegotiator):
-    def __init__(self, gamma=1.0, reserved_value=0.0, **kwargs):
+    def __init__(self, gamma=1.0, reserved_value=0.2, **kwargs):
         super().__init__(**kwargs)
         self.gamma = gamma
         self._rv = reserved_value

@@ -9,7 +9,7 @@ from negmas import SAOMechanism, make_issue, TimeBasedConcedingNegotiator
 from negmas.sao import AspirationNegotiator, AspirationNegotiator, RandomNegotiator, SAONegotiator, ResponseType
 from tqdm import tqdm
 
-from folder.CollaborativeAI.source_code.evaluation_scenarios import EvaluationScenarios
+from evaluation_scenarios import EvaluationScenarios
 
 @dataclass
 class ReactiveT4TConfig:
