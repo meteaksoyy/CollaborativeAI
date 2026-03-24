@@ -45,7 +45,7 @@ class VotingSystems:
                 # if its non empty
                 if first:
                     for f in first:
-                        first_places[f] = count / len(first) + first_places.get(f, 0)
+                        first_places[f] = count + first_places.get(f, 0)
 
         first_places = sorted(first_places.items(), key=lambda item: item[1], reverse=True)
         
@@ -74,7 +74,7 @@ class VotingSystems:
 
                 if last:
                     for l in last:
-                        last_places[l] = count / len(last) + last_places.get(l, 0)
+                        last_places[l] = count + last_places.get(l, 0)
 
                 
         last_places = sorted(last_places.items(), key=lambda item: item[1])
@@ -99,7 +99,7 @@ class VotingSystems:
 
                 for cand in group:
 
-                    scores[cand] = ((count * (3 - i - 1)) / len(group)) + scores.get(cand, 0) # we know they can only be 1st, 2nd or 3rd
+                    scores[cand] = ((count * (3 - i - 1))) + scores.get(cand, 0) # we know they can only be 1st, 2nd or 3rd
 
         # sort by highest score first
         scores = sorted(scores.items(), key=lambda item: item[1], reverse=True)
@@ -185,7 +185,7 @@ class VotingSystems:
 
                     if first_group:
 
-                        weight = count / len(first_group)
+                        weight = count
 
                         for c in first_group:
                             firsts[c] += weight
