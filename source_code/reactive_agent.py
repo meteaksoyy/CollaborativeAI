@@ -104,7 +104,7 @@ class ReactiveEvaluation:
             buyer_utils, seller_utils, rounds = [], [], []
             all_buyer_points, all_seller_points = [], []
 
-            for _ in tqdm.tqdm(range(sessions), desc=f"{name}"):
+            for _ in tqdm(range(sessions), desc=f"{name}"):
                 mechanism = SAOMechanism(issues=issue, n_steps=100)
 
                 if buyer_class is ReactiveT4TNegotiator:
@@ -141,7 +141,7 @@ class ReactiveEvaluation:
             })
 
         return results
-    
+
     @staticmethod
     def run_and_store_results():
 
@@ -152,7 +152,7 @@ class ReactiveEvaluation:
             "Multi Issue Equal": EvaluationScenarios.getMultipleIssueA(),
             "Multi Issue Unequal": EvaluationScenarios.getMultipleIssueB(),
         }
-        
+
         for other_class in [AspirationNegotiator, RandomNegotiator]:
             results = ReactiveEvaluation.run_scenarios(scenarios, sessions=30,
                                     buyer_class=ReactiveT4TNegotiator, seller_class=other_class)
@@ -171,5 +171,5 @@ class ReactiveEvaluation:
 
 
 if __name__ == "__main__":
-    
+
     ReactiveEvaluation.run_and_store_results()
