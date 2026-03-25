@@ -219,16 +219,6 @@ class VotingSystems:
 
         print(f"The winning candidates for Single Transferable Vote are {list(active)}")
 
-        
-
- 
-
-                    
-
-
-
-
-
 
 
 VotingSystems.plurality(data)   
