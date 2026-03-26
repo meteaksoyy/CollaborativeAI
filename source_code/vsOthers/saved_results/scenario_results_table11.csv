@@ -1,0 +1,11 @@
+Matchup,Agent A,Agent B,Scenario,Avg Utility A,Avg Utility B,Agreement Rate,Pareto Distance,Nash Distance,Kalai Distance,KS Distance
+ReactiveT4TNegotiator_vs_MicroNegotiator,ReactiveT4TNegotiator,MicroNegotiator,Single Issue,0.7,0.3,1.0,0.0,0.282842712474619,0.282842712474619,0.282842712474619
+ReactiveT4TNegotiator_vs_MicroNegotiator,ReactiveT4TNegotiator,MicroNegotiator,Double Issue Equal,0.65,0.35,1.0,0.0,0.21213203435596428,0.21213203435596428,0.21213203435596428
+ReactiveT4TNegotiator_vs_MicroNegotiator,ReactiveT4TNegotiator,MicroNegotiator,Double Issue Unequal,0.64,0.48,1.0,0.0,0.20000000000000012,0.09999999999999994,0.09999999999999994
+ReactiveT4TNegotiator_vs_MicroNegotiator,ReactiveT4TNegotiator,MicroNegotiator,Multi Issue Equal,0.45877551020408164,0.5208616780045352,1.0,0.23971853927019743,0.241005963655062,0.24214403966101863,0.24214403966101863
+ReactiveT4TNegotiator_vs_MicroNegotiator,ReactiveT4TNegotiator,MicroNegotiator,Multi Issue Unequal,0.4505102040816326,0.5499172642029786,1.0,0.218701239243416,0.23582060285668016,0.23582060285668016,0.23582060285668016
+MicroNegotiator_vs_ReactiveT4TNegotiator,MicroNegotiator,ReactiveT4TNegotiator,Single Issue,0.4,0.6,1.0,0.0,0.14142135623730948,0.14142135623730948,0.14142135623730948
+MicroNegotiator_vs_ReactiveT4TNegotiator,MicroNegotiator,ReactiveT4TNegotiator,Double Issue Equal,0.35,0.65,1.0,0.0,0.21213203435596428,0.21213203435596428,0.21213203435596428
+MicroNegotiator_vs_ReactiveT4TNegotiator,MicroNegotiator,ReactiveT4TNegotiator,Double Issue Unequal,0.4,0.8,1.0,0.0,0.19999999999999993,0.3000000000000001,0.3000000000000001
+MicroNegotiator_vs_ReactiveT4TNegotiator,MicroNegotiator,ReactiveT4TNegotiator,Multi Issue Equal,0.4340816326530613,0.47120181405895695,1.0,0.2912511801911218,0.29481222703080584,0.2915911704913252,0.2915911704913252
+MicroNegotiator_vs_ReactiveT4TNegotiator,MicroNegotiator,ReactiveT4TNegotiator,Multi Issue Unequal,0.6279591836734694,0.4219525648097077,1.0,0.15659749787417515,0.2546786496191703,0.2546786496191703,0.2546786496191703
